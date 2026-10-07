@@ -1,5 +1,5 @@
 # ============================================================
-#  .htaccess for Elapsum — https://elapsum.com
+#  .htaccess for Elapsum — https://elapsum.dfault.it
 #  Tier 1 static one-pager: CSP intentionally skipped, HSTS
 #  ships commented out (enable after HTTPS is verified green
 #  on production for a while).
@@ -97,6 +97,20 @@ AddType application/manifest+json webmanifest
 <IfModule mod_deflate.c>
 	AddOutputFilterByType DEFLATE text/html text/css application/javascript
 	AddOutputFilterByType DEFLATE application/json application/manifest+json image/svg+xml
+</IfModule>
+
+# ============================================================
+# --- Search engines kept OUT during the trial run ---
+# X-Robots-Tag is the reliable way to keep a page out of Google's
+# index. robots.txt "Disallow" only stops crawling: a blocked URL
+# can still be indexed from links, and a crawler never sees a
+# noindex on a page it isn't allowed to fetch. This header beats
+# the "index, follow" meta tag in index.html, because when robots
+# rules conflict the most restrictive one wins.
+# REMOVE AT LAUNCH: delete this block once the Pixel walkthrough passes.
+# ============================================================
+<IfModule mod_headers.c>
+	Header set X-Robots-Tag "noindex"
 </IfModule>
 
 # ============================================================

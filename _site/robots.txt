@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://elapsum.com/sitemap.xml
+Sitemap: https://elapsum.dfault.it/sitemap.xml
