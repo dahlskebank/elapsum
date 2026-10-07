@@ -1,4 +1,4 @@
-# HANDOFF — Elapsum (elapsum.com)
+# HANDOFF — Elapsum (elapsum.dfault.it)
 
 > Orientation for continuing work in a fresh Claude session.
 > Read this + README.md; SPEC.md governs design decisions;
@@ -9,9 +9,16 @@
 
 Single-user days-counter PWA (since/until/periods/yearly). Vanilla
 HTML/CSS/JS, no build step — `_site/` is hand-authored source AND web
-root, committed to git. Repo: https://github.com/dahlskebank/elapsum.com
-(public). Domain elapsum.com acquired 2026-07-18; go-live checklist in
-DEPLOY.md still pending (DNS/webhotel, LE cert, GA property).
+root, committed to git. Repo: https://github.com/dahlskebank/elapsum
+(public; was `elapsum.com` until 2026-10-07).
+
+Hosted at **https://elapsum.dfault.it** (Domeneshop webhotel, folder
+`__sub/elapsum`) — moved there 2026-10-07 before it ever went live, because
+a PWA's origin owns its data and moving after launch means export/import on
+every device. First deployed 2026-10-07 as v1.0.0 in **trial-run mode**
+(noindex + no-cache). elapsum.com was bought 2026-07-18, never deployed,
+stays parked, expected to lapse July 2027. Decision record:
+`docs/superpowers/specs/2026-10-07-elapsum-subdomain-move-design.md`.
 
 ## Architecture
 
@@ -28,29 +35,34 @@ DEPLOY.md still pending (DNS/webhotel, LE cert, GA property).
 
 ## Local dev
 
-- hosts: `127.0.0.1 elapsum.com` (done). Vhost:
-  `E:\vlaragon\etc\apache2\sites-enabled\elapsum.conf` → `_site/`
-  (Laragon had auto-created it pointing at the shared laragon.crt —
-  corrected to the dedicated cert; the shared cert has no elapsum SAN
-  and Chrome silently blocks the SW with it).
-- Cert `E:\vlaragon\etc\ssl\elapsum.crt|key` (SAN elapsum.com + www,
-  valid to 2036) — must be certutil-trusted once (admin) + Apache
-  restarted. UNDONE as of 2026-07-18 — Daniel's step.
-- Quick loop: `npx http-server _site -p 8331 -c-1`. Pixel testing:
-  Chrome USB port forwarding (recipe in DEPLOY.md).
+- Folder `E:\www\sub\elapsum`. hosts: `127.0.0.1 elapsum.dfault.it`.
+  Vhost: `E:\vlaragon\etc\apache2\sites-enabled\sub.elapsum.conf` →
+  `_site/` (sub.30days.conf clone).
+- Cert `E:\vlaragon\etc\ssl\elapsum.crt|key` (SAN elapsum.dfault.it, 825
+  days, same profile as 30days.crt) — must be certutil-trusted once
+  (admin) + Apache restarted, or Chrome silently blocks the SW.
+- Kept, disabled: `elapsum.conf.disabled` + `elapsum.com.crt|key` (the
+  original elapsum.com setup).
+- Quick loop: `npx http-server _site -p 8331 -c-1`. Pixel testing: the
+  live URL, or Chrome USB port forwarding (recipe in DEPLOY.md).
 
-## Open items (2026-07-18)
+## Open items (2026-10-07)
 
-1. Daniel: certutil-trust the cert + restart Apache + verify
-   https://elapsum.com loads with the SW registering.
-2. Daniel: on-device walkthrough (SPEC §10 list — import ×2/dedupe,
-   merge → 21 cards, yearly card, drag-vs-search, undo, formats,
-   offline, deck, install). Gestures were ported untested from v3 —
-   tuning expected (original handoff §7).
-3. Go-live checklist in DEPLOY.md (DNS/webhotel, LE cert, GA_ID paste,
-   .htaccess cache re-enable + HSTS, Search Console).
-4. Iteration-2 ideas: SPEC §12 (flexible recurrence — every N days /
-   weekday / Nth-of-month — matters for the widget-app future).
+1. Daniel: the move steps, if not done yet — close VS Code, move the folder
+   from `E:\www\dev\elapsum.com` to `E:\www\sub\elapsum`, hosts line + certutil
+   (admin), restart Apache, reopen VS Code in the new folder.
+2. Production TLS: Domeneshop LE cert for elapsum.dfault.it (ordered
+   2026-10-07, 1–2 h). Until it's live, prod serves Domeneshop's fallback
+   cert and the SW/install won't work there.
+3. Daniel: on-device walkthrough on https://elapsum.dfault.it (SPEC §10
+   list — import ×2/dedupe, merge → 21 cards, yearly card, drag-vs-search,
+   undo, formats, offline, deck, install). Gestures were ported untested
+   from v3 — tuning expected (original handoff §7).
+4. Go-live checklist in DEPLOY.md (noindex off, cache block on, GA_ID,
+   Search Console, /dd-website-launch, HSTS later).
+5. Iteration-2 ideas: SPEC §12 (flexible recurrence — every N days /
+   weekday / Nth-of-month — matters for the widget-app future). A birthday
+   calendar, if wanted, is a view over the existing yearly events.
 
 ## Conventions
 

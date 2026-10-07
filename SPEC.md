@@ -7,6 +7,10 @@
 > Structural template is E:\www\sub\30days: hand-authored `_site/` is both
 > source and web root, vanilla HTML/CSS/JS, no build step, no npm.
 
+> **Amended 2026-10-07:** hosted at `https://elapsum.dfault.it`, not
+> elapsum.com — see `docs/superpowers/specs/2026-10-07-elapsum-subdomain-move-design.md`.
+> Domain mentions below are updated; the decision record lives there.
+
 ## 1. What this is
 
 A self-hosted PWA replacement for the Android app "Days Counter" (pulled from
@@ -36,7 +40,7 @@ no swipe-to-delete ever; Slate design as-is), plus these, decided 2026-07-17:
 | Site chrome | Full public treatment: OG/Twitter meta + og-image, JSON-LD WebApplication, robots index+follow, sitemap, humans.txt, security.txt, 403/404. |
 | Color palette order | Swatch grid sorted by hue (rainbow), neutrals last by lightness (§5). |
 | Versioning | Start `v1.0.0`. `APP_VERSION` in app.js + `CACHE` in sw.js + version line in Settings→About; bump all three per deploy. |
-| License / git | WTFPL. Git repo with public GitHub remote: github.com/dahlskebank/elapsum.com (created 2026-07-17 at Daniel's request). |
+| License / git | WTFPL. Git repo with public GitHub remote: github.com/dahlskebank/elapsum (created 2026-07-17 at Daniel's request as `elapsum.com`, renamed 2026-10-07). |
 
 ## 3. Where the handoff is overruled
 
@@ -51,7 +55,7 @@ no swipe-to-delete ever; Slate design as-is), plus these, decided 2026-07-17:
 ## 4. Project structure
 
 ```
-e:\www\dev\elapsum.com\
+E:\www\sub\elapsum\     (was e:\www\dev\elapsum.com\ until 2026-10-07)
 ├── README.md            what/why/how + origin story
 ├── SPEC.md              this document
 ├── HANDOFF.md           session-continuation doc (living; created at first build)
@@ -104,11 +108,11 @@ wrapping) so consecutive new events stay visually distinct.
   Days Counter was pulled from Google Play; a self-hosted app can't be taken away.
 - A line noting the importer accepts the original Days Counter backup format
   (and Elapsum's own exports) — other apps' formats are not supported.
-- QR code (`qr-elapsum.svg`) linking to https://elapsum.com/ — "open on your phone" framing.
+- QR code (`qr-elapsum.svg`) linking to https://elapsum.dfault.it/ — "open on your phone" framing.
 - Bottom, in order: the motto *Tempus elapsum, opus incohatum* (italic, muted),
   the four dfault network links (labels/URLs from the boilerplate's
   `site.json → footer.links` at build time), then the legal line
-  `© 2026 ⌁ <year> → Elapsum.com · v1.0.0`.
+  `© 2026 ⌁ <year> → Elapsum · v1.0.0` (the link goes to https://elapsum.dfault.it).
 
 ## 7. PWA layer
 
@@ -128,7 +132,7 @@ wrapping) so consecutive new events stay visually distinct.
 
 ## 8. Head, meta, analytics
 
-Full 30days head: title/description/author, canonical `https://elapsum.com/`,
+Full 30days head: title/description/author, canonical `https://elapsum.dfault.it/`,
 OG + Twitter cards (generated og-image in Slate style), JSON-LD WebApplication,
 theme-color `#101014` (swapped by the light-theme toggle at runtime),
 apple-touch/mobile-web-app meta, GA4 loader with `GA_ID = ""` until the
@@ -136,20 +140,22 @@ property exists.
 
 ## 9. Local dev + deploy
 
-- Daniel has added `elapsum.com` to hosts. Build creates
-  `E:\vlaragon\etc\apache2\sites-enabled\elapsum.conf` (kiande.conf clone,
-  ROOT `E:/www/dev/elapsum.com/_site`) and a dedicated cert with an
-  `elapsum.com` SAN in `E:\vlaragon\etc\ssl\`. Daniel then runs the one-time
-  admin trust step (`certutil -addstore Root E:\vlaragon\etc\ssl\elapsum.crt`) —
-  the shared laragon.crt has no elapsum.com SAN and Chrome silently blocks the
-  service worker without it (kiande's old "install doesn't work" bug).
-- **Domain acquired 2026-07-18.** All URLs written for `https://elapsum.com/`;
-  deploy.sh/.env.example/DEPLOY.md ship ready; Daniel fills `.env` and works
-  the go-live checklist (DNS, Domeneshop webhotel, LE cert, GA property,
-  Search Console) when ready. Pixel testing pre-deploy: Chrome USB port
-  forwarding to localhost (recipe in DEPLOY.md).
-- `.htaccess` ships in no-cache test mode with the launch cache block
-  commented and marked RE-ENABLE AT LAUNCH, like 30days.
+- Local (since 2026-10-07): hosts `127.0.0.1 elapsum.dfault.it`; vhost
+  `E:\vlaragon\etc\apache2\sites-enabled\sub.elapsum.conf` (sub.30days.conf
+  clone, ROOT `E:/www/sub/elapsum/_site`) and a dedicated cert with an
+  `elapsum.dfault.it` SAN in `E:\vlaragon\etc\ssl\elapsum.crt|key`. One-time
+  admin trust step: `certutil -addstore Root E:\vlaragon\etc\ssl\elapsum.crt` —
+  the shared laragon.crt has no matching SAN and Chrome silently blocks the
+  service worker without it (kiande's old "install doesn't work" bug). The
+  original elapsum.com vhost/cert are kept, disabled
+  (`elapsum.conf.disabled`, `elapsum.com.crt|key`).
+- Production: Domeneshop webhotel, subdomain `elapsum.dfault.it` → folder
+  `__sub/elapsum`, deployed with deploy.sh. elapsum.com (acquired 2026-07-18)
+  was never deployed; it stays parked and is expected to lapse July 2027.
+  Pixel testing without a deploy: Chrome USB port forwarding to localhost
+  (recipe in DEPLOY.md).
+- `.htaccess` ships in trial-run mode: no-cache, plus an `X-Robots-Tag:
+  noindex` header; both are marked for removal/re-enable at launch, like 30days.
 
 ## 10. Acceptance (run against Daniel's real backup.txt, dropped in `_temp\`)
 
@@ -179,3 +185,4 @@ never) · dfault.it/projects catalog entry (post-launch).
 - **Sidethought, not planned:** 30 Days could live under the elapsum.com
   umbrella (same universe/spirit; 30days has only a subdomain today) — e.g.
   as an app catalog on elapsum.com. Revisit only if Daniel raises it again.
+  **Closed 2026-10-07:** no umbrella domain — see the move spec.

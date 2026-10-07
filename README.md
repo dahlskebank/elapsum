@@ -6,6 +6,8 @@ can't be taken away.
 
 *Tempus elapsum, opus incohatum.*
 
+Live: **https://elapsum.dfault.it**
+
 ## What it does
 
 - Counts days **since** and **until** single dates
@@ -29,7 +31,8 @@ the hand-authored source and the web root.
 
 ## Develop
 
-Serve `_site/` (Laragon vhost or `npx http-server _site -p 8331 -c-1`) and
+Serve `_site/` (Laragon vhost `sub.elapsum.conf` → https://elapsum.dfault.it
+locally, or `npx http-server _site -p 8331 -c-1`) and
 edit. Tests: `node _dev/run-tests.mjs`. Deploy: see `DEPLOY.md`.
 
 ## Docs
