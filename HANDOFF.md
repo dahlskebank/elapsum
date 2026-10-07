@@ -49,11 +49,20 @@ stays parked, expected to lapse July 2027. Decision record:
 ## Open items (2026-10-07)
 
 1. Daniel: the move steps, if not done yet — close VS Code, move the folder
-   from `E:\www\dev\elapsum.com` to `E:\www\sub\elapsum`, hosts line + certutil
-   (admin), restart Apache, reopen VS Code in the new folder.
-2. Production TLS: Domeneshop LE cert for elapsum.dfault.it (ordered
-   2026-10-07, 1–2 h). Until it's live, prod serves Domeneshop's fallback
-   cert and the SW/install won't work there.
+   from `E:\www\dev\elapsum.com` to `E:\www\sub\elapsum`, admin: comment out
+   the old `127.0.0.1 elapsum.com` hosts line (the `elapsum.dfault.it` line
+   already exists) + certutil, restart Apache, reopen VS Code in the new
+   folder. Until then this PC sends elapsum.dfault.it to a local Apache that
+   doesn't serve it yet — check prod from the Pixel meanwhile.
+2. Done 2026-10-07: production HTTPS is live. Domeneshop issues ONE Let's
+   Encrypt cert for the whole webhotel (CN dxd.no; SANs include
+   30days.dfault.it and elapsum.dfault.it), issued ~1 h after the subdomain
+   was added. Verified with full TLS checking.
+   First deploy (v1.0.0) was an additive SFTP push by Claude, not
+   `deploy.sh` — lftp hangs without a TTY in Claude's harness (see the
+   dd-deploy skill). `__sub/elapsum` was empty beforehand, so Daniel's first
+   `DRY_RUN=1 ./deploy.sh _site` should show no `Removing` lines; if any
+   appear, they are files Domeneshop put there — review before the real run.
 3. Daniel: on-device walkthrough on https://elapsum.dfault.it (SPEC §10
    list — import ×2/dedupe, merge → 21 cards, yearly card, drag-vs-search,
    undo, formats, offline, deck, install). Gestures were ported untested

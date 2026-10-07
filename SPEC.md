@@ -150,7 +150,8 @@ property exists.
   original elapsum.com vhost/cert are kept, disabled
   (`elapsum.conf.disabled`, `elapsum.com.crt|key`).
 - Production: Domeneshop webhotel, subdomain `elapsum.dfault.it` → folder
-  `__sub/elapsum`, deployed with deploy.sh. elapsum.com (acquired 2026-07-18)
+  `__sub/elapsum`, deployed with deploy.sh (first deploy 2026-10-07 was an
+  additive SFTP push by Claude — see HANDOFF). elapsum.com (acquired 2026-07-18)
   was never deployed; it stays parked and is expected to lapse July 2027.
   Pixel testing without a deploy: Chrome USB port forwarding to localhost
   (recipe in DEPLOY.md).

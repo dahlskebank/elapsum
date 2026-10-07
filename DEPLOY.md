@@ -46,7 +46,10 @@ July 2027. Decision record: `docs/superpowers/specs/2026-10-07-elapsum-subdomain
 
 ## Trial run (now)
 
-First deployed 2026-10-07 as v1.0.0 in trial-run mode:
+First deployed 2026-10-07 as v1.0.0 in trial-run mode (an additive SFTP
+push by Claude — lftp can't run from Claude's harness; see the dd-deploy
+skill). HTTPS is live: Domeneshop's one Let's Encrypt cert for the whole
+webhotel lists elapsum.dfault.it as a SAN.
 
 - `.htaccess` sends `X-Robots-Tag: noindex` — Google stays out until launch.
 - `.htaccess` sends `Cache-Control: no-cache` on everything — fixes reach the
@@ -57,7 +60,6 @@ First deployed 2026-10-07 as v1.0.0 in trial-run mode:
 
 ## Go-live checklist (after the walkthrough passes)
 
-- [ ] Domeneshop LE certificate for elapsum.dfault.it is live (needed for the trial run too)
 - [ ] Delete the "Search engines kept OUT" noindex block in `_site/.htaccess`
 - [ ] Re-enable the launch cache block in `_site/.htaccess` (banner marks it), remove the global no-cache block
 - [ ] Create the GA4 property for elapsum.dfault.it, paste the measurement id into `window.GA_ID` in `_site/index.html`
