@@ -48,12 +48,12 @@ stays parked, expected to lapse July 2027. Decision record:
 
 ## Open items (2026-10-07)
 
-1. Daniel: the move steps, if not done yet — close VS Code, move the folder
-   from `E:\www\dev\elapsum.com` to `E:\www\sub\elapsum`, admin: comment out
-   the old `127.0.0.1 elapsum.com` hosts line (the `elapsum.dfault.it` line
-   already exists) + certutil, restart Apache, reopen VS Code in the new
-   folder. Until then this PC sends elapsum.dfault.it to a local Apache that
-   doesn't serve it yet — check prod from the Pixel meanwhile.
+1. Done 2026-10-07: the move steps — folder now at `E:\www\sub\elapsum`,
+   old `127.0.0.1 elapsum.com` hosts line commented out, local cert
+   certutil-trusted, Apache serving `_site/` for elapsum.dfault.it. Verified
+   with /dd-website-launch the same day: every production file matches the
+   repo byte for byte (tested via `curl --resolve` against the webhotel IP,
+   since the hosts line points this PC at the local copy).
 2. Done 2026-10-07: production HTTPS is live. Domeneshop issues ONE Let's
    Encrypt cert for the whole webhotel (CN dxd.no; SANs include
    30days.dfault.it and elapsum.dfault.it), issued ~1 h after the subdomain
